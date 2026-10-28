@@ -6,7 +6,7 @@ import QtQuick.Dialogs
 Item {
     id: root
 
-    property var tmp_workspaces_sessions_json:[]
+    property variant tmp_workspaces_sessions_json:[]
 
     property var selected_session_pre_idx:[]
 
@@ -55,7 +55,7 @@ Item {
 
     function init_workspaces_sessions(){
         load_workspaces_sessions()
-        //console.debug("workspaces_sessions loaded from backend:\n",JSON.stringify(tmp_workspaces_sessions_json,null,4))
+        //console.debug("workspaces_sessions :\n",JSON.stringify(tmp_workspaces_sessions_json,null,4))
         workspaces_sessions.init(tmp_workspaces_sessions_json)
         tmp_workspaces_sessions_json=null
     }
@@ -78,7 +78,7 @@ Item {
             store_workspaces_sessions(JSON.stringify(arr,null,4))
         }
 
-        function init(w_s:var){
+        function init(w_s){
             if(w_s.length){
                 for(var i=0;i<w_s.length;i++){
                     let w={
@@ -95,12 +95,12 @@ Item {
         }
 
         function create(s){
-            let ns=[]
-            ns=s
-            for(var i=0;i<ns.length;i++){
-                ns[i]["selected"]=false
+            let c=[]
+            c=s
+            for(var i=0;i<c.length;i++){
+                c[i].selected=false
             }
-            return ns
+            return c
         }
 
         function resolve_sessions(s){
@@ -114,22 +114,6 @@ Item {
             }
             return a
         }
-    }
-
-    function listModelToJson(model) {
-        var arr = []
-        for (var i = 0; i < model.count; i++) {
-            var item = model.get(i)
-            var obj = {}
-            // 自动提取所有角色字段
-            for (var key in item) {
-                if (item.hasOwnProperty(key)) {
-                    obj[key] = item[key]
-                }
-            }
-            arr.push(obj)
-        }
-        return JSON.stringify(arr)
     }
 
     Rectangle {
@@ -267,13 +251,21 @@ Item {
                 FolderDialog {
                     id: folder_dialog
                     title: "选择文件夹"
+
+                    function abc(){
+                        var abc=[]
+                        abc.push({ id:root.tmp_session_id,name:"新会话",selected:true})
+                        return abc
+                    }
+
                     onAccepted: {
                         root.cur_dir=selectedFolder.toString().replace("file:///","")
                         for(var i=root.cur_dir.length-1;i>-1;i--){
                             if(root.cur_dir[i]==='/'){
                                 let nname=root.cur_dir.substring(i+1,root.cur_dir.length)
                                 workspaces_sessions.append({id:-1,name:nname,
-                                                               path:root.cur_dir,sessions:[]})
+                                                            path:root.cur_dir,
+                                                            sessions:[]})
                                 //backend,create workspace
                                 //signal
                                 root.add_workspace(root.cur_dir,nname)

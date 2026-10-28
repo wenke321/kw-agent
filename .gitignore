@@ -1,1 +1,5 @@
 build
+api.txt
+.cache
+.vscode
+tool/kw-agent.db
