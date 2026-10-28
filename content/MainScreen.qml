@@ -182,6 +182,7 @@ Rectangle {
             let ret=backend.load_workspaces_sessions_json()
             if(ret.ok){
                 sidebar.tmp_workspaces_sessions_json=ret.json
+                //console.debug("workspaces_sessions_jsonstr trans to qml:\n",JSON.stringify(ret.json,null,4))
                 console.info("加载工作区成功\n")
             }else{
                 console.error("加载工作区失败\n")
@@ -593,8 +594,8 @@ Rectangle {
                             name:tool_calls[k].name,
                             args_result:JSON.stringify(tool_calls[k].args,null,4)+"\n"+tool_calls[k].result
                         }
-                        console.debug(tool_calls[k].args)
-                        console.debug(atc.args_result)
+                        //console.debug(tool_calls[k].args)
+                        //console.debug(atc.args_result)
                         t_c.push(atc)
                     }
                     return t_c

@@ -4,7 +4,11 @@ include(ProcessorCount)
 
 
 #my_change
+#set(CMAKE_PROJECT_INCLUDE_BEFORE ${CMAKE_CURRENT_SOURCE_DIR}/.qtcreator/cmake-helper/qtcreator-project.cmake)
+
 set(CMAKE_BUILD_PARALEL_LEVEL ProcessorCount(NPROC))
+
+set(CMAKE_GENERATOR "Ninja" CACHE INTERNAL "")
 
 find_program(CCACHE ccache)
 if(CCACHE)
@@ -64,9 +68,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
 )
 
 #my_change
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -fno-omit-frame-pointer -fno-optimize-sibling-calls")
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fsanitize=address")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -fno-omit-frame-pointer -fno-optimize-sibling-calls")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -fno-omit-frame-pointer -fno-optimize-sibling-calls")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ")
 #my_change
 
 #my_change_start
